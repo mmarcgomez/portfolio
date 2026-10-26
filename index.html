@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mar's Farm · Portfolio</title>
+  <meta name="description" content="Portfolio of Mar (María del Mar Clara Gómez), DAM student and software developer in training. Python, backend and AI agents.">
+  <meta property="og:title" content="Mar's Farm · Portfolio">
+  <meta property="og:description" content="DAM student growing software instead of parsnips: Python, backend and AI agents.">
+  <meta property="og:image" content="assets/avatar.jpg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Jersey+10&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Pick day / night before first paint to avoid a flash
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('farm-theme'); } catch (e) {}
+      var q = new URLSearchParams(location.search).get('theme');
+      if (q === 'day' || q === 'night') t = q;
+      if (!t) {
+        var h = new Date().getHours();
+        var osDark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+        t = (osDark || h >= 20 || h < 7) ? 'night' : 'day';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Seasonal weather (leaves, petals, snow, fireflies) -->
+  <div class="weather" id="weather" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Mar's Farm, back to top">
+      <i class="px" data-sprite="junimo"></i><span>Mar's Farm</span>
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a href="#about"><i class="px" data-sprite="heart"></i><span>About</span></a>
+      <a href="#skills"><i class="px" data-sprite="star"></i><span>Skills</span></a>
+      <a href="#projects"><i class="px" data-sprite="pumpkin"></i><span>Projects</span></a>
+      <a href="#contact"><i class="px" data-sprite="letter"></i><span>Contact</span></a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between day and night">
+      <i class="px" data-sprite="sun" id="themeIcon"></i>
+    </button>
+  </header>
+
+  <!-- In-game clock (decorative, desktop only) -->
+  <aside class="hud" aria-hidden="true">
+    <div class="hud-clock">
+      <div class="hud-day" id="hudDay">Mon. 26</div>
+      <div class="hud-mid"><i class="px" data-sprite="sun" id="hudIcon"></i><span id="hudSeason">Fall</span></div>
+      <div class="hud-time" id="hudTime">6:00 am</div>
+    </div>
+    <div class="hud-gold"><i class="px" data-sprite="coin"></i><span id="gold">0</span><small>g</small></div>
+  </aside>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section id="home" class="hero">
+      <div class="sky" aria-hidden="true">
+        <div class="sun-disc"></div>
+        <div class="moon-disc"></div>
+        <div class="stars" id="stars"></div>
+        <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+        <div class="hills"></div>
+      </div>
+
+      <div class="hero-inner">
+        <p class="kicker">~ welcome to ~</p>
+        <h1 class="logo" id="logo">Mar's Farm</h1>
+        <p class="tagline">Software developer in training · DAM student · Spain</p>
+
+        <div class="dialogue panel" id="dialogue">
+          <div class="dlg-text">
+            <p id="dlgText" aria-live="polite">Hi! I'm Mar, welcome to my farm. Here I grow software instead of parsnips.</p>
+            <button class="dlg-next" id="dlgNext" type="button" aria-label="Next line">
+              <i class="px" data-sprite="arrow"></i>
+            </button>
+          </div>
+          <div class="dlg-portrait">
+            <img src="assets/avatar.jpg" alt="Portrait of Mar" width="120" height="120">
+            <span class="nameplate">Mar</span>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn btn-green" href="#projects">See my harvest</a>
+          <a class="btn" href="#contact">Send me a letter</a>
+        </div>
+      </div>
+
+      <div class="field" aria-hidden="true">
+        <div class="fence"></div>
+        <div class="soil">
+          <div class="crops" id="crops"></div>
+          <div class="junimos" id="junimos"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section">
+      <h2 class="sign"><span>About me</span></h2>
+
+      <div class="about-grid">
+        <article class="panel profile">
+          <div class="portrait-frame">
+            <img src="assets/avatar.jpg" alt="Mar" width="160" height="160" loading="lazy">
+          </div>
+          <h3>Mar</h3>
+          <p class="fullname">María del Mar Clara Gómez</p>
+          <dl class="stats">
+            <div><dt>Class</dt><dd>DAM student</dd></div>
+            <div><dt>Focus</dt><dd>Backend &amp; AI agents</dd></div>
+            <div><dt>Farm</dt><dd>Spain</dd></div>
+            <div><dt>Status</dt><dd class="status-ok"><span class="dot"></span>Open to opportunities</dd></div>
+          </dl>
+          <div class="friendship">
+            <span>Love for code</span>
+            <span class="hearts" aria-label="8 out of 10 hearts">
+              <i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px" data-sprite="heart"></i><i class="px off" data-sprite="heart"></i><i class="px off" data-sprite="heart"></i>
+            </span>
+          </div>
+        </article>
+
+        <article class="panel about-text">
+          <p class="lead">Hi! I'm Mar, a <strong>Multiplatform Application Development (DAM)</strong> student who loves understanding how things work under the hood.</p>
+          <p>I'm focused on <strong>backend development</strong> and <strong>AI agents</strong>. I like building small, real projects step by step: experimenting with LLM providers like OpenAI, HuggingFace and Ollama, wiring them into Python apps and turning ideas into things that actually run, like a voice assistant that lives on my own computer.</p>
+          <p>I try to get a little better every day. Like watering crops: small and constant, until one day there's a harvest.</p>
+
+          <h3 class="journal-title"><i class="px" data-sprite="quest"></i> Journal · current quests</h3>
+          <ul class="quests">
+            <li class="done">
+              <span class="check" aria-hidden="true"></span>
+              <div><strong>Build simple AI agents with real behavior</strong><small>Completed! See AI Agent &amp; Jarvis</small></div>
+            </li>
+            <li>
+              <span class="check" aria-hidden="true"></span>
+              <div><strong>Understand how AI systems work internally</strong><span class="qbar"><span style="width:60%"></span></span></div>
+            </li>
+            <li>
+              <span class="check" aria-hidden="true"></span>
+              <div><strong>Level up backend logic &amp; problem solving</strong><span class="qbar"><span style="width:55%"></span></span></div>
+            </li>
+            <li>
+              <span class="check" aria-hidden="true"></span>
+              <div><strong>Learn to design system architecture</strong><span class="qbar"><span style="width:30%"></span></span></div>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <div class="fence divider" aria-hidden="true"></div>
+
+    <!-- ============ SKILLS ============ -->
+    <section id="skills" class="section">
+      <h2 class="sign"><span>Skills</span></h2>
+
+      <div class="skills-grid">
+        <article class="panel levels">
+          <h3>Skill levels</h3>
+          <ul class="level-list">
+            <li>
+              <i class="px" data-sprite="parsnip"></i>
+              <div class="lv-name"><strong>Backend</strong><small>Python, Flask, Java, Spring Boot</small></div>
+              <span class="pips" style="--lv:6"></span><span class="lv">Lv 6</span>
+            </li>
+            <li>
+              <i class="px" data-sprite="fish"></i>
+              <div class="lv-name"><strong>AI &amp; LLMs</strong><small>Ollama, prompts, agents</small></div>
+              <span class="pips" style="--lv:5"></span><span class="lv">Lv 5</span>
+            </li>
+            <li>
+              <i class="px" data-sprite="strawberry"></i>
+              <div class="lv-name"><strong>Frontend</strong><small>HTML, CSS, JS, React</small></div>
+              <span class="pips" style="--lv:4"></span><span class="lv">Lv 4</span>
+            </li>
+            <li>
+              <i class="px" data-sprite="gem"></i>
+              <div class="lv-name"><strong>Databases</strong><small>MySQL</small></div>
+              <span class="pips" style="--lv:4"></span><span class="lv">Lv 4</span>
+            </li>
+            <li>
+              <i class="px" data-sprite="sword"></i>
+              <div class="lv-name"><strong>Debugging</strong><small>Fighting bugs since day 1</small></div>
+              <span class="pips" style="--lv:5"></span><span class="lv">Lv 5</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="panel backpack">
+          <h3>Backpack</h3>
+          <p class="hint">Hover or tap an item to inspect it</p>
+          <ul class="inventory" id="inventory"></ul>
+          <div class="item-info" id="itemInfo" aria-live="polite">
+            <img id="infoIcon" src="assets/icons/python.svg" alt="" width="40" height="40">
+            <div>
+              <strong id="infoName">Python</strong>
+              <small id="infoType">Language</small>
+              <p id="infoDesc">My main crop. AI agents, Flask apps, OOP practice and MySQL scripts.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="fence divider" aria-hidden="true"></div>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section">
+      <h2 class="sign"><span>Projects</span></h2>
+      <p class="section-sub">This season's harvest, fresh from GitHub.</p>
+
+      <div class="projects">
+        <article class="panel project featured">
+          <div class="p-head">
+            <span class="slot big"><i class="px" data-sprite="paw"></i></span>
+            <div>
+              <span class="badge gold"><i class="px" data-sprite="star"></i> Featured</span>
+              <h3>PawVet · Veterinary Clinic Manager</h3>
+              <p class="planted">Planted · Fall 2026 · Java + Spring Boot</p>
+            </div>
+          </div>
+          <p>A web app to run a veterinary clinic day to day, built with <strong>Java, Spring Boot and MySQL</strong>. It keeps customer and pet records in one place, organizes appointments and emergencies on an agenda and makes the administrative side of the clinic simpler, all behind a secure login.</p>
+          <ul class="features">
+            <li>Customer and pet records (species, breed, sex)</li>
+            <li>Appointment agenda with a status flow: pending, checked in, in consultation, completed</li>
+            <li>Emergency appointments and a point-of-sale (TPV) screen</li>
+            <li>Clinic paperwork: consent forms, prescriptions and surgical sheets</li>
+            <li>Login and access control with Spring Security</li>
+            <li>MVC layers: controllers, services and JPA repositories</li>
+          </ul>
+          <ul class="tags">
+            <li>Java 21</li><li>Spring Boot</li><li>Spring Data JPA</li><li>Spring Security</li><li>Thymeleaf</li><li>MySQL</li><li>Maven</li><li>HTML/CSS/JS</li>
+          </ul>
+          <a class="btn btn-small" href="https://github.com/mmarcgomez/PawVet" target="_blank" rel="noopener">View on GitHub <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="panel project featured">
+          <div class="p-head">
+            <span class="slot big"><i class="px" data-sprite="pumpkin"></i></span>
+            <div>
+              <span class="badge gold"><i class="px" data-sprite="star"></i> Featured</span>
+              <h3>Jarvis · Local AI Voice Assistant</h3>
+              <p class="planted">Planted · Spring 2026 · Python + HTML</p>
+            </div>
+          </div>
+          <p>A Jarvis-like assistant that runs <strong>100% locally</strong>. It listens, thinks, speaks and reacts visually with animated eyes, combining voice control, AI chat through Ollama and a real-time web interface you can even open from your phone.</p>
+          <ul class="features">
+            <li>Voice recognition and text-to-speech replies</li>
+            <li>Local LLM brain with Ollama (Llama 3)</li>
+            <li>Real-time Flask web UI with animated eyes</li>
+            <li>Multithreading and basic system control</li>
+          </ul>
+          <ul class="tags">
+            <li>Python</li><li>Flask</li><li>Ollama</li><li>SpeechRecognition</li><li>pyttsx3</li><li>Threading</li><li>HTML/CSS/JS</li>
+          </ul>
+          <a class="btn btn-small" href="https://github.com/mmarcgomez/project-jarvis" target="_blank" rel="noopener">View on GitHub <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="panel project">
+          <div class="p-head">
+            <span class="slot"><i class="px" data-sprite="sunflower"></i></span>
+            <div>
+              <span class="badge team">Team project · 4 devs</span>
+              <h3>Barbershop ERP</h3>
+              <p class="planted">Planted · Fall 2025 · Python + JS</p>
+            </div>
+          </div>
+          <p>A desktop ERP for a barbershop, built with <strong>Python and pywebview</strong>: customers, products with stock alerts, services, users and PDF invoices, all stored in JSON. I built the <strong>services module</strong>, worked on <strong>invoicing</strong> and wrote a <strong>business analytics</strong> section: revenue by category, monthly billing by city, VAT impact and customer lifetime value.</p>
+          <ul class="tags"><li>Python</li><li>pywebview</li><li>JavaScript</li><li>HTML/CSS</li><li>JSON</li><li>Git flow</li></ul>
+          <a class="btn btn-small" href="https://github.com/Roy-Rebuffo/Trabajo-Grupal-Python" target="_blank" rel="noopener">View on GitHub <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="panel project">
+          <div class="p-head">
+            <span class="slot"><i class="px" data-sprite="strawberry"></i></span>
+            <div>
+              <h3>AI Agent</h3>
+              <p class="planted">Planted · Spring 2026 · Python</p>
+            </div>
+          </div>
+          <p>A simple AI agent built to compare LLM providers: <strong>OpenAI</strong>, <strong>HuggingFace</strong> and <strong>Ollama</strong>. The final version runs Llama 3 locally, and the other agents stay in the repo to document the experiments.</p>
+          <ul class="tags"><li>Python</li><li>Ollama</li><li>Llama 3</li><li>OpenAI API</li><li>HuggingFace</li></ul>
+          <a class="btn btn-small" href="https://github.com/mmarcgomez/AI_Agent" target="_blank" rel="noopener">View on GitHub <span aria-hidden="true">↗</span></a>
+        </article>
+
+      </div>
+
+      <p class="more"><a class="btn btn-green" href="https://github.com/mmarcgomez" target="_blank" rel="noopener">Visit my whole farm on GitHub <span aria-hidden="true">↗</span></a></p>
+    </section>
+
+    <div class="fence divider" aria-hidden="true"></div>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section">
+      <h2 class="sign"><span>Contact</span></h2>
+
+      <div class="contact-grid">
+        <article class="panel mailbox-card">
+          <i class="px mailbox" data-sprite="mailbox" id="mailbox"></i>
+          <h3>Mar's mailbox</h3>
+          <p>Got an opportunity, a question or just want to say hi? Drop a letter in the mailbox and it goes straight to my inbox.</p>
+          <ul class="links">
+            <li><a href="mailto:mmargomez01@gmail.com"><img src="assets/icons/gmail.svg" alt="" width="32" height="32"><span><small>Email</small>mmargomez01@gmail.com</span></a></li>
+            <li><a href="https://github.com/mmarcgomez" target="_blank" rel="noopener"><img src="assets/icons/github.svg" alt="" width="32" height="32"><span><small>GitHub</small>@mmarcgomez</span></a></li>
+            <li><a href="https://www.linkedin.com/in/marimarclaragomez" target="_blank" rel="noopener"><img src="assets/icons/linkedin.svg" alt="" width="32" height="32"><span><small>LinkedIn</small>marimarclaragomez</span></a></li>
+          </ul>
+        </article>
+
+        <form class="letter" id="letterForm">
+          <p class="letter-head">Dear Mar,</p>
+          <label for="f-name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Lewis, the mayor">
+          <label for="f-email">Your email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" rows="6" required placeholder="I saw your farm and..."></textarea>
+          <input type="hidden" name="time" value="">
+          <input type="text" name="honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="letter-foot">
+            <span class="letter-sign">~ sent from the valley</span>
+            <button class="btn btn-green" type="submit" id="sendBtn"><i class="px" data-sprite="letter"></i> Send letter</button>
+          </div>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year">2026</span> Mar · Grown with patience, coffee and Python <i class="px" data-sprite="parsnip"></i></p>
+    <p class="small">Fan-made theme inspired by Stardew Valley by ConcernedApe. Not affiliated.</p>
+  </footer>
+
+  <!-- Energy bar = scroll progress -->
+  <div class="energy" aria-hidden="true">
+    <span class="energy-e">E</span>
+    <div class="energy-bar"><div class="energy-fill" id="energyFill"></div></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
